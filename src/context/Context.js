@@ -6,7 +6,7 @@ const NewsContext = createContext();
 export const useNewsContext = () => useContext(NewsContext);
 
 export const NewsProvider = ({ children }) => {
-    const API_KEY = "768c27130cc540d79423ad9e557beb96";
+    const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
     const BASE_URL = "https://newsapi.org/v2";
 
     const [articles, setArticles] = useState([]);
@@ -32,8 +32,8 @@ export const NewsProvider = ({ children }) => {
                     q: query,
                 },
                 headers: {
-                    "User-Agent": "Mozilla/5.0",  // ✅ Solución para evitar el error 426
-                    "Accept": "application/json"
+                    "User-Agent": "Mozilla/5.0",  // ✅ Evita el error 426
+                    "Accept": "application/json",
                 }
             });
     
@@ -47,6 +47,7 @@ export const NewsProvider = ({ children }) => {
             setLoading(false);
         }
     };
+    
     
     useEffect(() => {
         console.log("Fetching news...");
