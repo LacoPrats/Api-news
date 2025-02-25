@@ -6,8 +6,8 @@ const NewsContext = createContext();
 export const useNewsContext = () => useContext(NewsContext);
 
 export const NewsProvider = ({ children }) => {
-    const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-    const BASE_URL = "https://newsapi.org/v2";
+    const API_KEY = "79942dd1969c4d4bed99a9cc62a5fff8";
+    const BASE_URL = "https://gnews.io/api/v4/search?q=example&apikey=79942dd1969c4d4bed99a9cc62a5fff8";
 
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,23 +16,26 @@ export const NewsProvider = ({ children }) => {
     const[totalResults,setTotalResults]=useState(0);
     const[category,setCategory]=useState("")
     const [query,setQuery]=useState("")
+    console.log(API_KEY);
+    console.log(BASE_URL);
+    
 
     const fetchNews = async () => {
         setLoading(true);
         setError(null);
     
         try {
-            const response = await axios.get(`${BASE_URL}/top-headlines`, {
+            const response = await axios.get(`${BASE_URL}`, {
                 params: {
-                    apiKey: API_KEY,
+                    apiKey: API_KEY, // ✅ Solo una vez
                     country: "us",
                     page: currentPage,
                     pageSize: 6,
-                    category,
-                    q: query,
+                    category: category || undefined,
+                    q: query || undefined,
                 },
                 headers: {
-                    "User-Agent": "Mozilla/5.0",  // ✅ Evita el error 426
+                    "User-Agent": "Mozilla/5.0",
                     "Accept": "application/json",
                 }
             });
@@ -41,12 +44,13 @@ export const NewsProvider = ({ children }) => {
             setArticles(response.data.articles);
             setTotalResults(response.data.totalResults);
         } catch (err) {
-            console.error("Error fetching news:", err);
+            console.error("Error fetching news:", err.response?.data || err);
             setError("Could not fetch data");
         } finally {
             setLoading(false);
         }
     };
+    
     
     
     useEffect(() => {
