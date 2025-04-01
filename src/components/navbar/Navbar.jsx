@@ -7,7 +7,6 @@ function Navbar() {
 const{category,changeCategory,setQuery}=useNewsContext()
 
     const categories=[
-        "Buisness",
         "Entertainment",
         "General",
         "Health",

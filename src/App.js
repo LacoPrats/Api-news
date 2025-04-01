@@ -8,6 +8,7 @@ function App() {
     <NewsProvider>
    <div className="app">
     <Navbar/>
+    
     <NewsFeed/>
   </div>
   </NewsProvider>
