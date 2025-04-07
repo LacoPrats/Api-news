@@ -9,7 +9,7 @@ function App() {
    <div className="app">
     <Navbar/>
     
-    <NewsFeed/>
+   <NewsFeed/>
   </div>
   </NewsProvider>
 
