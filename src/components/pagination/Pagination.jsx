@@ -5,31 +5,45 @@ function Pagination({ currentPage, setCurrentPage, totalResults }) {
     const pageSize = 6;
     const totalPages = Math.ceil(totalResults / pageSize);
 
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-    }
-
     const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber); // ✅ Usamos setCurrentPage correctamente
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
+    // Limitar visualmente a 6 páginas, centrando la selección si es posible
+    const getVisiblePages = () => {
+        const visiblePages = [];
+        const maxVisible = 6;
+
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let endPage = startPage + maxVisible - 1;
+
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(1, endPage - maxVisible + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            visiblePages.push(i);
+        }
+
+        return visiblePages;
+    };
+
+    const visiblePages = getVisiblePages();
 
     return (
         <div className='pagination'>
             <button
                 className='prev-btn'
                 disabled={currentPage === 1}
-                onClick={() => currentPage > 1 && handlePageClick(currentPage - 1)}
+                onClick={() => handlePageClick(currentPage - 1)}
             >
                 Prev
             </button>
 
             <ul className='page-numbers'>
-                {pageNumbers.map((pageNumber) => (
+                {visiblePages.map((pageNumber) => (
                     <li
                         key={pageNumber}
                         className={`page-number ${pageNumber === currentPage ? "active" : ""}`}
@@ -43,7 +57,7 @@ function Pagination({ currentPage, setCurrentPage, totalResults }) {
             <button
                 className='next-btn'
                 disabled={currentPage === totalPages}
-                onClick={() => currentPage < totalPages && handlePageClick(currentPage + 1)}
+                onClick={() => handlePageClick(currentPage + 1)}
             >
                 Next
             </button>
@@ -52,4 +66,3 @@ function Pagination({ currentPage, setCurrentPage, totalResults }) {
 }
 
 export default Pagination;
-
