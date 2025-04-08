@@ -1,6 +1,4 @@
-.error-message {
-  color: red;
-  text-align: center;
-  margin: 20px;
-  font-size: 1.2rem;
+.no-news-message {
+  color: #999;
+  font-style: italic;
 }
