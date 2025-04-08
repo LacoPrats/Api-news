@@ -1,18 +1,16 @@
 .news-feed {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.news-feed-container {
+  max-width: 1500px;
+  margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 15px;
-}
-
-.no-news-message {
-  text-align: center;
-  font-size: 1.5rem;
-  color: #888;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 🔁 bajamos a 280 para que entren más */
+  gap: 24px;
 }
